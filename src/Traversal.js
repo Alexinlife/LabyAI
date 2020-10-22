@@ -1,6 +1,8 @@
 import React from 'react';
 import Graph from 'react-graph-vis';
 import MyGraph from './Graph';
+import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
 
 /**
  * @author 1838304 - Alex Lajeunesse
@@ -26,13 +28,24 @@ class Traversal extends React.Component {
         this.graph = new MyGraph(0, 15);
         this.origin = this.graph.origin;
         this.end = this.graph.end;
+        this.count = 0;
+
+        // Pour parcoursEnLargeur() avec intervalle de temps
+        this.poppedVertex = undefined;
+        this.connectedVertices = undefined;
+        this.stack.push(this.graph.origin);
+        this.parcoursEnLargeur = this.parcoursEnLargeur.bind(this);
+        this.intervalle = undefined;
 
         this.state = {
-            graph: undefined
+            graph: this.graph
         }
 
         this.createLaby();
-        this.parcoursEnLargeur();
+    }
+
+    componentDidMount() {
+        this.intervalle = setInterval(() => this.parcoursEnLargeur(), 1000);
     }
 
     /**
@@ -75,11 +88,13 @@ class Traversal extends React.Component {
         this.graph.connectVertices(16, 17);
         this.graph.connectVertices(17, 18);
 
-        this.setState({
-            graph: this.graph
-        });
-
-        console.log(this.graph.getConnectedVertices(14));
+        this.setState((prevState) => ({
+            graph: {
+                ...prevState.graph,
+                vertices: _.cloneDeep(this.graph.vertices),
+                edges: _.cloneDeep(this.graph.edges),
+            }
+        }));
     }
 
     /**
@@ -93,38 +108,35 @@ class Traversal extends React.Component {
      * @returns null
      */
     parcoursEnLargeur() {
-        var poppedVertex;
-        var connectedVertices;
-        this.stack.push(this.graph.origin);
         this.graph.vertices[this.origin].color = "green";
 
-        while (this.stack.length !== 0) {
-            poppedVertex = this.stack.pop();
-            connectedVertices = this.graph.getConnectedVertices(poppedVertex);
+        if (this.stack.length !== 0) {
+            this.poppedVertex = this.stack.pop();
+            this.connectedVertices = this.graph.getConnectedVertices(this.poppedVertex);
 
-            for (let i = 0; i < connectedVertices.length; i++) {
-                if (this.graph.vertices[i].color !== "green") {
-                    this.stack.push(connectedVertices[i]);
-                    this.graph.vertices[i].color = "green";
+            for (let i = 0; i < this.connectedVertices.length; i++) {
+                if (this.graph.vertices[this.connectedVertices[i]].color !== "green") {
+                    this.stack.push(this.connectedVertices[i]);
+                    this.graph.vertices[this.connectedVertices[i]].color = "green";
+                    this.count++;
                 }
-                this.setState({
-                    graph: this.graph
-                });
-                console.log(this.state.graph);
+                this.setState((prevState) => ({
+                    graph: {
+                        ...prevState.graph,
+                        vertices: _.cloneDeep(this.graph.vertices),
+                        edges: _.cloneDeep(this.graph.edges),
+                    }
+                }));
             }
         }
     }
 
     render() {
-        const graph = {
-            nodes: this.graph.vertices,
-            edges: this.graph.edges
-        };
-
         // Gère les options du graphe tels que la physique l'identification des noeuds, etc.
         const options = {
             layout: {
-                hierarchical: false
+                hierarchical: false,
+                randomSeed: 4
             },
             nodes: {
                 shape: "dot",
@@ -148,7 +160,11 @@ class Traversal extends React.Component {
         return (
             <div className="content">
                 <Graph
-                    graph={graph}
+                    key={uuidv4()}
+                    graph={{
+                        nodes: this.state.graph.vertices,
+                        edges: this.state.graph.edges
+                    }}
                     options={options}
                     getNetwork={(network) => {
                         //  if you want access to vis.js network api you can set the state in a parent component using this property

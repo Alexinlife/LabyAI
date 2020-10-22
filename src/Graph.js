@@ -79,7 +79,7 @@ class Graph {
             this.createEdge(vertex0.id, vertex1.id);
         }
     }
-    
+
     /**
      * Alex Lajeunesse
      * 
