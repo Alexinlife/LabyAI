@@ -14,14 +14,16 @@ class Vertex {
      * 
      * Constructeur de Vertex
      * 
-     * @param idVertex L'id du noeud
-     * @param groupVertex Le groupe du noeud
+     * @param id L'identifiant du noeud
+     * @param color Le groupe du noeud
      * @returns null
      */
-    constructor(idVertex, groupVertex) {
-        this.id = idVertex;
-        this.label = String(idVertex);
-        this.group = groupVertex;
+    constructor(id, color) {
+        this.id = id;
+        this.x = null;
+        this.y = null;
+        this.label = String(id);
+        this.color = color;
     }
 }
 

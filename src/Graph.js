@@ -17,14 +17,18 @@ class Graph {
      * 
      * Constructeur de Graph
      * 
-     * @param null
+     * @param color L'origine du graphe
+     * @param end La fin du graphe
      * @returns null
      */
-    constructor() {
+    constructor(origin, end) {
         this.vertices = [];
         this.edges = [];
         this.currentId = 0;
         this.grade = 0;
+
+        this.origin = origin;
+        this.end = end;
     }
 
     /**
@@ -32,11 +36,11 @@ class Graph {
      * 
      * Crée un noeud et l'ajoute au graphe
      * 
-     * @param group l'index du groupe (couleur) qui lui sera assigné
+     * @param color la couleur qui lui sera assigné
      * @returns null
      */
-    createVertex(group) {
-        this.vertices.push(new Vertex(this.currentId, group));
+    createVertex(color) {
+        this.vertices.push(new Vertex(this.currentId, color));
         this.currentId++;
     }
 
@@ -75,6 +79,25 @@ class Graph {
             this.createEdge(vertex0.id, vertex1.id);
         }
     }
+    
+    /**
+     * Alex Lajeunesse
+     * 
+     * Vérifie les noeuds connectés au noeud demandé
+     * 
+     * @param id L'identifiant du noeud
+     * @returns Un tableau contenant les noeuds connectés
+     */
+    getConnectedVertices(id) {
+        var connectedVertices = [];
+
+        for (let i = 0; i < this.edges.length; i++) {
+            if (this.edgeExist(id, i) || this.edgeExist(i, id)) {
+                connectedVertices.push(i);
+            }
+        }
+        return connectedVertices;
+    }
 
     /**
      * Alex Lajeunesse
@@ -92,7 +115,7 @@ class Graph {
             from = to;
             to = tmp;
         }
-        if (this.findEdge(from, to) === false && from !== to) {
+        if (this.edgeExist(from, to) === false && from !== to) {
             this.edges.push(new Edge(from, to));
         }
     }
@@ -106,7 +129,7 @@ class Graph {
      * @param to l'index du second noeud
      * @returns true si l'arête existe, sinon false
      */
-    findEdge(from, to) {
+    edgeExist(from, to) {
         for (let index = 0; index < this.edges.length; index++) {
             if (this.edges[index].from === from && this.edges[index].to === to) {
                 return true;
