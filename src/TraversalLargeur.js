@@ -7,17 +7,17 @@ import _ from "lodash";
 /**
  * @author 1838304 - Alex Lajeunesse
  * 
- * @class Traversal
+ * @class TraversalLargeur
  * 
  * @classdesc Parcours en français.
- * @classdesc Partie de l'algorithme qui parcoure les graphes.
+ * @classdesc Partie de l'algorithme qui parcoure les graphes en largeur.
  */
-class Traversal extends React.Component {
+class TraversalLargeur extends React.Component {
 
     /**
      * @author Alex Lajeunesse
      * 
-     * @description Constructeur de Traversal
+     * @description Constructeur de TraversalLargeur
      * 
      * @params null
      * @returns null
@@ -88,6 +88,46 @@ class Traversal extends React.Component {
         this.graph.connectVertices(16, 17);
         this.graph.connectVertices(17, 18);
 
+        // Positionnement des noeuds (oui, c'est laid)
+        this.graph.vertices[0].x = 0;
+        this.graph.vertices[0].y = 0;
+        this.graph.vertices[1].x = 0;
+        this.graph.vertices[1].y = 100;
+        this.graph.vertices[2].x = 0;
+        this.graph.vertices[2].y = 200;
+        this.graph.vertices[3].x = 0;
+        this.graph.vertices[3].y = 300;
+        this.graph.vertices[4].x = 0;
+        this.graph.vertices[4].y = 400;
+        this.graph.vertices[5].x = 100;
+        this.graph.vertices[5].y = 200;
+        this.graph.vertices[6].x = 100;
+        this.graph.vertices[6].y = 400;
+        this.graph.vertices[7].x = 200;
+        this.graph.vertices[7].y = 0;
+        this.graph.vertices[8].x = 200;
+        this.graph.vertices[8].y = 100;
+        this.graph.vertices[9].x = 200;
+        this.graph.vertices[9].y = 200;
+        this.graph.vertices[10].x = 200;
+        this.graph.vertices[10].y = 300;
+        this.graph.vertices[11].x = 200;
+        this.graph.vertices[11].y = 400;
+        this.graph.vertices[12].x = 300;
+        this.graph.vertices[12].y = 0;
+        this.graph.vertices[13].x = 300;
+        this.graph.vertices[13].y = 400;
+        this.graph.vertices[14].x = 400;
+        this.graph.vertices[14].y = 0;
+        this.graph.vertices[15].x = 400;
+        this.graph.vertices[15].y = 100;
+        this.graph.vertices[16].x = 400;
+        this.graph.vertices[16].y = 200;
+        this.graph.vertices[17].x = 400;
+        this.graph.vertices[17].y = 300;
+        this.graph.vertices[18].x = 400;
+        this.graph.vertices[18].y = 400;
+
         this.setState((prevState) => ({
             graph: {
                 ...prevState.graph,
@@ -111,7 +151,7 @@ class Traversal extends React.Component {
         this.graph.vertices[this.origin].color = "green";
 
         if (this.stack.length !== 0) {
-            this.poppedVertex = this.stack.pop();
+            this.poppedVertex = this.stack.shift();
             this.connectedVertices = this.graph.getConnectedVertices(this.poppedVertex);
 
             for (let i = 0; i < this.connectedVertices.length; i++) {
@@ -154,11 +194,12 @@ class Traversal extends React.Component {
             physics: {
                 enabled: false
             },
-            height: "700px"
+            height: "400px"
         };
 
         return (
             <div className="content">
+                <h4 className="title">Parcours en largeur</h4>
                 <Graph
                     key={uuidv4()}
                     graph={{
@@ -175,4 +216,4 @@ class Traversal extends React.Component {
     }
 }
 
-export default Traversal;
+export default TraversalLargeur;

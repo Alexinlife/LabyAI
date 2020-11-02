@@ -2,7 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './style.css';
-import Traversal from "./Traversal";
+import TraversalLargeur from "./TraversalLargeur";
+import TraversalProfondeur from "./TraversalProfondeur";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="title">LabyAI</h1>
-        <Traversal />
+        <TraversalLargeur />
+        <TraversalProfondeur />
       </header>
     </div>
   );
