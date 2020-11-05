@@ -123,7 +123,7 @@ class Graph {
     /**
      * Alex Lajeunesse
      * 
-     * Trouve un arête relié à deux noeuds.
+     * Vérifie si un arête existe.
      * 
      * @param from l'index du premier noeud
      * @param to l'index du second noeud

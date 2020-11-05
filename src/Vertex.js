@@ -22,6 +22,7 @@ class Vertex {
         this.id = id;
         this.x = null;
         this.y = null;
+        this.distance = 1000000000;
         this.label = String(id);
         this.color = color;
     }

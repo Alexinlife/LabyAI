@@ -4,6 +4,7 @@ import './App.css';
 import './style.css';
 import TraversalLargeur from "./TraversalLargeur";
 import TraversalProfondeur from "./TraversalProfondeur";
+import Disjkstra from "./Disjkstra";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <h1 className="title">LabyAI</h1>
         <TraversalLargeur />
         <TraversalProfondeur />
+        <Disjkstra />
       </header>
     </div>
   );

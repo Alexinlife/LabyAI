@@ -7,17 +7,16 @@ import _ from "lodash";
 /**
  * @author 1838304 - Alex Lajeunesse
  * 
- * @class TraversalLargeur
+ * @class Disjkstra
  * 
- * @classdesc Parcours en français.
- * @classdesc Partie de l'algorithme qui parcoure les graphes en largeur.
+ * @classdesc Partie de l'algorithme qui parcoure les graphes pour trouver le plus court chemin.
  */
-class TraversalLargeur extends React.Component {
+class Disjkstra extends React.Component {
 
     /**
      * @author Alex Lajeunesse
      * 
-     * @description Constructeur de TraversalLargeur
+     * @description Constructeur de Disjkstra
      * 
      * @params null
      * @returns null
@@ -34,7 +33,7 @@ class TraversalLargeur extends React.Component {
         this.poppedVertex = undefined;
         this.connectedVertices = undefined;
         this.stack.push(this.graph.origin);
-        this.parcoursEnLargeur = this.parcoursEnLargeur.bind(this);
+        this.disjkstra = this.disjkstra.bind(this);
         this.intervalle = undefined;
 
         this.state = {
@@ -45,7 +44,7 @@ class TraversalLargeur extends React.Component {
     }
 
     componentDidMount() {
-        this.intervalle = setInterval(() => this.parcoursEnLargeur(), 1000);
+        this.intervalle = setInterval(() => this.disjkstra(), 1000);
     }
 
     /**
@@ -128,6 +127,11 @@ class TraversalLargeur extends React.Component {
         this.graph.vertices[18].x = 400;
         this.graph.vertices[18].y = 400;
 
+        this.graph.vertices[this.origin].distance = 0;
+
+        console.log(this.graph.vertices);
+        console.log(this.graph.edges);
+
         this.setState((prevState) => ({
             graph: {
                 ...prevState.graph,
@@ -147,7 +151,7 @@ class TraversalLargeur extends React.Component {
      * @params null
      * @returns null
      */
-    parcoursEnLargeur() {
+    disjkstra() {
         this.graph.vertices[this.origin].color = "green";
 
         if (this.stack.length !== 0) {
@@ -199,7 +203,7 @@ class TraversalLargeur extends React.Component {
 
         return (
             <div className="content">
-                <h4 className="title">Parcours en largeur</h4>
+                <h4 className="title">Algorithme de Disjkstra</h4>
                 <Graph
                     key={uuidv4()}
                     graph={{
@@ -216,4 +220,4 @@ class TraversalLargeur extends React.Component {
     }
 }
 
-export default TraversalLargeur;
+export default Disjkstra;

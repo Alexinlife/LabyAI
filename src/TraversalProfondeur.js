@@ -197,7 +197,7 @@ class TraversalProfondeur extends React.Component {
             physics: {
                 enabled: false
             },
-            height: "400px"
+            height: "275px"
         };
 
         return (
