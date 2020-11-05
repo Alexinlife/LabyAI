@@ -137,6 +137,29 @@ class Graph {
         }
         return false;
     }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * Retourne le poids de l'arête demandé
+     * 
+     * @param {*} from l'index du premier noeud
+     * @param {*} to l'index du second noeud
+     * @returns le poids de l'arête s'il existe, sinon false
+     */
+    getEdgeWeight(from, to) {
+        if (from > to) {
+            var tmp = from;
+            from = to;
+            to = tmp;
+        }
+        for (let i = 0; i < this.edges.length; i++) {
+            if (this.edges[i].from === from && this.edges[i].to === to) {
+                return this.edges[i].weight;
+            }
+        }
+        return false;
+    }
 }
 
 export default Graph;

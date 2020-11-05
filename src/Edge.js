@@ -20,7 +20,7 @@ class Edge {
     constructor(idFrom, idTo) {
         this.from = idFrom;
         this.to = idTo;
-        this.weight = Math.floor(Math.random() * 10) + 1;
+        this.weight = 1;
         this.label = String(this.weight);
     }
 }

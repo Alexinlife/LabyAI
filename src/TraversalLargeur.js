@@ -24,16 +24,15 @@ class TraversalLargeur extends React.Component {
      */
     constructor() {
         super();
-        this.stack = [];
+        this.queue = [];
         this.graph = new MyGraph(0, 15);
         this.origin = this.graph.origin;
         this.end = this.graph.end;
-        this.count = 0;
 
         // Pour parcoursEnLargeur() avec intervalle de temps
         this.poppedVertex = undefined;
         this.connectedVertices = undefined;
-        this.stack.push(this.graph.origin);
+        this.queue.push(this.graph.origin);
         this.parcoursEnLargeur = this.parcoursEnLargeur.bind(this);
         this.intervalle = undefined;
 
@@ -150,15 +149,14 @@ class TraversalLargeur extends React.Component {
     parcoursEnLargeur() {
         this.graph.vertices[this.origin].color = "green";
 
-        if (this.stack.length !== 0) {
-            this.poppedVertex = this.stack.shift();
+        if (this.queue.length !== 0) {
+            this.poppedVertex = this.queue.shift();
             this.connectedVertices = this.graph.getConnectedVertices(this.poppedVertex);
 
             for (let i = 0; i < this.connectedVertices.length; i++) {
                 if (this.graph.vertices[this.connectedVertices[i]].color !== "green") {
-                    this.stack.push(this.connectedVertices[i]);
+                    this.queue.push(this.connectedVertices[i]);
                     this.graph.vertices[this.connectedVertices[i]].color = "green";
-                    this.count++;
                 }
                 this.setState((prevState) => ({
                     graph: {
@@ -194,7 +192,7 @@ class TraversalLargeur extends React.Component {
             physics: {
                 enabled: false
             },
-            height: "275px"
+            height: "300px"
         };
 
         return (

@@ -12,9 +12,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="title">LabyAI</h1>
+        <Disjkstra />
         <TraversalLargeur />
         <TraversalProfondeur />
-        <Disjkstra />
       </header>
     </div>
   );

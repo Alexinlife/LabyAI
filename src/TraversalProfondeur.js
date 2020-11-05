@@ -28,9 +28,8 @@ class TraversalProfondeur extends React.Component {
         this.graph = new MyGraph(0, 15);
         this.origin = this.graph.origin;
         this.end = this.graph.end;
-        this.count = 0;
 
-        // Pour parcoursEnLargeur() avec intervalle de temps
+        // Pour parcoursEnProfondeur() avec intervalle de temps
         this.poppedVertex = undefined;
         this.connectedVertices = undefined;
         this.stack.push(this.graph.origin);
@@ -161,7 +160,6 @@ class TraversalProfondeur extends React.Component {
                 if (this.graph.vertices[this.connectedVertices[i]].color !== "green") {
                     this.stack.push(this.connectedVertices[i]);
                     this.graph.vertices[this.connectedVertices[i]].color = "green";
-                    this.count++;
                 }
                 this.setState((prevState) => ({
                     graph: {
@@ -197,7 +195,7 @@ class TraversalProfondeur extends React.Component {
             physics: {
                 enabled: false
             },
-            height: "275px"
+            height: "300px"
         };
 
         return (

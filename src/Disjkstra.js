@@ -1,6 +1,7 @@
 import React from 'react';
 import Graph from 'react-graph-vis';
 import MyGraph from './Graph';
+import PriorityQueue from 'priorityqueuejs';
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 
@@ -23,16 +24,18 @@ class Disjkstra extends React.Component {
      */
     constructor() {
         super();
-        this.stack = [];
+        this.queue = new PriorityQueue(function (a, b) {
+            return b.distance - a.distance;
+        });
         this.graph = new MyGraph(0, 15);
         this.origin = this.graph.origin;
         this.end = this.graph.end;
         this.count = 0;
 
-        // Pour parcoursEnLargeur() avec intervalle de temps
-        this.poppedVertex = undefined;
-        this.connectedVertices = undefined;
-        this.stack.push(this.graph.origin);
+        // TODO: Enlever lorsque terminé
+        this.stack = [];
+
+        // Pour disjkstra() avec intervalle de temps
         this.disjkstra = this.disjkstra.bind(this);
         this.intervalle = undefined;
 
@@ -41,10 +44,11 @@ class Disjkstra extends React.Component {
         }
 
         this.createLaby();
+        this.premierParcours();
     }
 
     componentDidMount() {
-        this.intervalle = setInterval(() => this.disjkstra(), 1000);
+        this.intervalle = setInterval(() => this.disjkstra(), 500);
     }
 
     /**
@@ -129,9 +133,6 @@ class Disjkstra extends React.Component {
 
         this.graph.vertices[this.origin].distance = 0;
 
-        console.log(this.graph.vertices);
-        console.log(this.graph.edges);
-
         this.setState((prevState) => ({
             graph: {
                 ...prevState.graph,
@@ -144,9 +145,52 @@ class Disjkstra extends React.Component {
     /**
      * @author Alex Lajeunesse
      * 
-     * @description L’algorithme de parcours en largeur permet de visiter tous les noeuds d’un graphe
-     * @description en commençant par le noeud racine pour visiter tous les noeuds voisins puis leurs successeurs,
-     * @description et ainsi de suite jusqu’à ce que l’on ait parcouru tout le graphe. (Description fournie par Frédérik Taleb)
+     * @description Donne une valeur de distance à chaque noeud en effectuant un parcours en largeur
+     * 
+     * @params null
+     * @returns null
+     */
+    premierParcours() {
+        var na;
+        var connectedVertices = [];
+
+        this.graph.vertices[this.origin].color = "green";
+        this.queue.enq(this.graph.vertices[this.origin]);
+
+        while (!this.queue.isEmpty()) {
+            na = this.queue.deq();
+            connectedVertices = this.graph.getConnectedVertices(na.id);
+
+            for (let i = 0; i < connectedVertices.length; i++) {
+                if (this.graph.vertices[connectedVertices[i]].color !== "green") {
+                    this.queue.enq(this.graph.vertices[connectedVertices[i]]);
+                    this.graph.vertices[connectedVertices[i]].color = "green";
+                    this.graph.vertices[connectedVertices[i]].distance = na.distance + this.graph.getEdgeWeight(na.id, connectedVertices[i]);
+                }
+            }
+        }
+
+        this.resetColors();
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Réinitialise les couleurs après premierParcours()
+     * @description premierParcours() marque les noeuds en vert
+     */
+    resetColors() {
+        for (let i = 0; i < this.graph.vertices.length; i++) {
+            this.graph.vertices[i].color = "white";
+        }
+        this.graph.vertices[this.origin].color = "blue";
+        this.graph.vertices[this.end].color = "red";
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description 
      * 
      * @params null
      * @returns null
@@ -198,7 +242,7 @@ class Disjkstra extends React.Component {
             physics: {
                 enabled: false
             },
-            height: "275px"
+            height: "600px"
         };
 
         return (
