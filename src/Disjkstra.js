@@ -32,11 +32,9 @@ class Disjkstra extends React.Component {
         this.end = this.graph.end;
         this.count = 0;
 
-        // TODO: Enlever lorsque terminé
-        this.stack = [];
+        this.path = [];
 
         // Pour disjkstra() avec intervalle de temps
-        this.disjkstra = this.disjkstra.bind(this);
         this.intervalle = undefined;
 
         this.state = {
@@ -45,11 +43,12 @@ class Disjkstra extends React.Component {
 
         this.createLaby();
         this.premierParcours();
+        // this.plusCourtChemin();
     }
 
-    componentDidMount() {
-        this.intervalle = setInterval(() => this.disjkstra(), 500);
-    }
+    /*componentDidMount() {
+        // this.intervalle = setInterval(() => , 500);
+    }*/
 
     /**
      * @author Alex Lajeunesse
@@ -190,33 +189,39 @@ class Disjkstra extends React.Component {
     /**
      * @author Alex Lajeunesse
      * 
+     * @description Parcoure le graphe à la recherche du plus court chemin à partir de la fin
+     */
+    plusCourtChemin() {
+        var currentVertex = this.end;
+        while (currentVertex !== this.origin) {
+            this.getShortestVertex(currentVertex);
+            currentVertex = this.path[this.path.length-1];
+            console.log("looping");
+        }
+        console.log(this.path.reverse());
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
      * @description 
      * 
-     * @params null
-     * @returns null
+     * @param {*} vertexId L'identifiant du noeud demandé
      */
-    disjkstra() {
-        this.graph.vertices[this.origin].color = "green";
-
-        if (this.stack.length !== 0) {
-            this.poppedVertex = this.stack.shift();
-            this.connectedVertices = this.graph.getConnectedVertices(this.poppedVertex);
-
-            for (let i = 0; i < this.connectedVertices.length; i++) {
-                if (this.graph.vertices[this.connectedVertices[i]].color !== "green") {
-                    this.stack.push(this.connectedVertices[i]);
-                    this.graph.vertices[this.connectedVertices[i]].color = "green";
-                    this.count++;
-                }
-                this.setState((prevState) => ({
-                    graph: {
-                        ...prevState.graph,
-                        vertices: _.cloneDeep(this.graph.vertices),
-                        edges: _.cloneDeep(this.graph.edges),
-                    }
-                }));
+    getShortestVertex(vertexId) {
+        var connectedVertices = this.graph.getConnectedVertices(vertexId);
+        var shortestDistance = 1000000000
+        var currentVertex;
+        var vertexToPush;
+        for (let i = 0; i < connectedVertices.length; i++) {
+            currentVertex = this.graph.findVertex(connectedVertices[i]);
+            if (currentVertex.distance < shortestDistance) {
+                shortestDistance = currentVertex.distance;
+                vertexToPush = currentVertex;
             }
+            console.log("looping");
         }
+        this.path.push(vertexToPush);
     }
 
     render() {
