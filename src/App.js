@@ -4,7 +4,7 @@ import './App.css';
 import './style.css';
 import TraversalLargeur from "./TraversalLargeur";
 import TraversalProfondeur from "./TraversalProfondeur";
-import Disjkstra from "./Disjkstra";
+import PlusCourtChemin from "./PlusCourtChemin";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="title">LabyAI</h1>
-        <Disjkstra />
+        <PlusCourtChemin />
         <TraversalLargeur />
         <TraversalProfondeur />
       </header>

@@ -8,16 +8,16 @@ import _ from "lodash";
 /**
  * @author 1838304 - Alex Lajeunesse
  * 
- * @class Disjkstra
+ * @class PlusCourtChemin
  * 
  * @classdesc Partie de l'algorithme qui parcoure les graphes pour trouver le plus court chemin.
  */
-class Disjkstra extends React.Component {
+class PlusCourtChemin extends React.Component {
 
     /**
      * @author Alex Lajeunesse
      * 
-     * @description Constructeur de Disjkstra
+     * @description Constructeur de PlusCourtChemin
      * 
      * @params null
      * @returns null
@@ -30,12 +30,13 @@ class Disjkstra extends React.Component {
         this.graph = new MyGraph(0, 15);
         this.origin = this.graph.origin;
         this.end = this.graph.end;
-        this.count = 0;
 
         this.path = [];
 
-        // Pour disjkstra() avec intervalle de temps
+        // Pour drawPath() avec intervalle de temps
         this.intervalle = undefined;
+        this.drawPath = this.drawPath.bind(this);
+        this.count = 0;
 
         this.state = {
             graph: this.graph
@@ -43,12 +44,12 @@ class Disjkstra extends React.Component {
 
         this.createLaby();
         this.premierParcours();
-        // this.plusCourtChemin();
+        this.plusCourtChemin();
     }
 
-    /*componentDidMount() {
-        // this.intervalle = setInterval(() => , 500);
-    }*/
+    componentDidMount() {
+        this.intervalle = setInterval(() => this.drawPath(), 500);
+    }
 
     /**
      * @author Alex Lajeunesse
@@ -193,18 +194,18 @@ class Disjkstra extends React.Component {
      */
     plusCourtChemin() {
         var currentVertex = this.end;
+        this.path.push(this.end);
         while (currentVertex !== this.origin) {
             this.getShortestVertex(currentVertex);
             currentVertex = this.path[this.path.length-1];
-            console.log("looping");
         }
-        console.log(this.path.reverse());
+        this.path.reverse();
     }
 
     /**
      * @author Alex Lajeunesse
      * 
-     * @description 
+     * @description Trouve le noeud le plus proche de celui demandé
      * 
      * @param {*} vertexId L'identifiant du noeud demandé
      */
@@ -217,11 +218,29 @@ class Disjkstra extends React.Component {
             currentVertex = this.graph.findVertex(connectedVertices[i]);
             if (currentVertex.distance < shortestDistance) {
                 shortestDistance = currentVertex.distance;
-                vertexToPush = currentVertex;
+                vertexToPush = currentVertex.id;
             }
-            console.log("looping");
         }
         this.path.push(vertexToPush);
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description 
+     */
+    drawPath() {
+        if (this.count < this.path.length) {
+            this.graph.vertices[this.path[this.count]].color = "green";
+            this.count++;
+        }
+        this.setState((prevState) => ({
+            graph: {
+                ...prevState.graph,
+                vertices: _.cloneDeep(this.graph.vertices),
+                edges: _.cloneDeep(this.graph.edges),
+            }
+        }));
     }
 
     render() {
@@ -252,7 +271,7 @@ class Disjkstra extends React.Component {
 
         return (
             <div className="content">
-                <h4 className="title">Algorithme de Disjkstra</h4>
+                <h4 className="title">Plus court chemin</h4>
                 <Graph
                     key={uuidv4()}
                     graph={{
@@ -269,4 +288,4 @@ class Disjkstra extends React.Component {
     }
 }
 
-export default Disjkstra;
+export default PlusCourtChemin;
