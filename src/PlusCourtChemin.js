@@ -233,6 +233,8 @@ class PlusCourtChemin extends React.Component {
         if (this.count < this.path.length) {
             this.graph.vertices[this.path[this.count]].color = "green";
             this.count++;
+        } else {
+            clearInterval(this.intervalle);
         }
         this.setState((prevState) => ({
             graph: {
@@ -262,6 +264,9 @@ class PlusCourtChemin extends React.Component {
                 arrows: {
                     to: false
                 }
+            },
+            interaction: {
+              zoomView: false,
             },
             physics: {
                 enabled: false

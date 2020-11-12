@@ -166,6 +166,8 @@ class TraversalLargeur extends React.Component {
                     }
                 }));
             }
+        } else {
+            clearInterval(this.intervalle);
         }
     }
 
@@ -188,6 +190,9 @@ class TraversalLargeur extends React.Component {
                 arrows: {
                     to: false
                 }
+            },
+            interaction: {
+              zoomView: false,
             },
             physics: {
                 enabled: false

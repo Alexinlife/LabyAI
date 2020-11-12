@@ -169,6 +169,8 @@ class TraversalProfondeur extends React.Component {
                     }
                 }));
             }
+        } else {
+            clearInterval(this.intervalle);
         }
     }
 
@@ -191,6 +193,9 @@ class TraversalProfondeur extends React.Component {
                 arrows: {
                     to: false
                 }
+            },
+            interaction: {
+              zoomView: false,
             },
             physics: {
                 enabled: false
