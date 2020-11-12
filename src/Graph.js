@@ -2,20 +2,20 @@ import Edge from "./Edge";
 import Vertex from "./Vertex";
 
 /**
- * 1838304 - Alex Lajeunesse
+ * @author 1838304 - Alex Lajeunesse
  * 
- * Graph
+ * @class Graph
  * 
- * Graphe en français.
- * Structure de données composée de noeuds et d'arêtes
- * Sert à générer des régions dans cette application
+ * @classdesc Graphe en français.
+ * @classdesc Structure de données composée de noeuds et d'arêtes
+ * @classdesc Sert à générer des régions dans cette application
  */
 class Graph {
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Constructeur de Graph
+     * @description Constructeur de Graph
      * 
      * @param color L'origine du graphe
      * @param end La fin du graphe
@@ -32,9 +32,9 @@ class Graph {
     }
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Crée un noeud et l'ajoute au graphe
+     * @description Crée un noeud et l'ajoute au graphe
      * 
      * @param color la couleur qui lui sera assigné
      * @returns null
@@ -45,9 +45,9 @@ class Graph {
     }
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Cherche dans le graphe le noeud recherché
+     * @description Cherche dans le graphe le noeud recherché
      * 
      * @param id l'index du noeud qui est recherché
      * @returns le noeud s'il existe, sinon false
@@ -62,9 +62,9 @@ class Graph {
     }
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Connecte deux noeuds ensemble en créant un arête.
+     * @description Connecte deux noeuds ensemble en créant un arête.
      * 
      * @param from l'index du premier noeud
      * @param to l'index du second noeud
@@ -81,9 +81,9 @@ class Graph {
     }
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Vérifie les noeuds connectés au noeud demandé
+     * @description Vérifie les noeuds connectés au noeud demandé
      * 
      * @param id L'identifiant du noeud
      * @returns Un tableau contenant les noeuds connectés
@@ -100,10 +100,10 @@ class Graph {
     }
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Crée un arête reliant deux noeuds.
-     * Vérifie si le lien existe déjà.
+     * @description Crée un arête reliant deux noeuds.
+     * @description Vérifie si le lien existe déjà.
      * 
      * @param from l'index du premier noeud
      * @param to l'index du second noeud
@@ -121,9 +121,9 @@ class Graph {
     }
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Vérifie si un arête existe.
+     * @description Vérifie si un arête existe.
      * 
      * @param from l'index du premier noeud
      * @param to l'index du second noeud
@@ -141,7 +141,7 @@ class Graph {
     /**
      * @author Alex Lajeunesse
      * 
-     * Retourne le poids de l'arête demandé
+     * @description Retourne le poids de l'arête demandé
      * 
      * @param {*} from l'index du premier noeud
      * @param {*} to l'index du second noeud

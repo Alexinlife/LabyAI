@@ -27,6 +27,8 @@ class PlusCourtChemin extends React.Component {
         this.queue = new PriorityQueue(function (a, b) {
             return b.distance - a.distance;
         });
+
+        // Définition initiale du graphe et de ses propriétés
         this.graph = new MyGraph(0, 15);
         this.origin = this.graph.origin;
         this.end = this.graph.end;
@@ -42,11 +44,20 @@ class PlusCourtChemin extends React.Component {
             graph: this.graph
         }
 
+        // Appel des méthodes pour créer le graphe et trouver son plus court chemin
         this.createLaby();
         this.premierParcours();
         this.plusCourtChemin();
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Assure le fonctionnement de l'intervalle dans React
+     * 
+     * @params null
+     * @returns null
+     */
     componentDidMount() {
         this.intervalle = setInterval(() => this.drawPath(), 500);
     }
@@ -133,6 +144,7 @@ class PlusCourtChemin extends React.Component {
 
         this.graph.vertices[this.origin].distance = 0;
 
+        // Pour le render du graphe
         this.setState((prevState) => ({
             graph: {
                 ...prevState.graph,
@@ -164,12 +176,13 @@ class PlusCourtChemin extends React.Component {
             for (let i = 0; i < connectedVertices.length; i++) {
                 if (this.graph.vertices[connectedVertices[i]].color !== "green") {
                     this.queue.enq(this.graph.vertices[connectedVertices[i]]);
+                    // Pour marquer ses noeuds, l'algorithme change la couleur de ceux-ci
                     this.graph.vertices[connectedVertices[i]].color = "green";
                     this.graph.vertices[connectedVertices[i]].distance = na.distance + this.graph.getEdgeWeight(na.id, connectedVertices[i]);
                 }
             }
         }
-
+        // Remet les couleurs originales après le passage de l'algorithme
         this.resetColors();
     }
 
@@ -178,6 +191,9 @@ class PlusCourtChemin extends React.Component {
      * 
      * @description Réinitialise les couleurs après premierParcours()
      * @description premierParcours() marque les noeuds en vert
+     * 
+     * @params null
+     * @returns null
      */
     resetColors() {
         for (let i = 0; i < this.graph.vertices.length; i++) {
@@ -191,6 +207,9 @@ class PlusCourtChemin extends React.Component {
      * @author Alex Lajeunesse
      * 
      * @description Parcoure le graphe à la recherche du plus court chemin à partir de la fin
+     * 
+     * @params null
+     * @returns null
      */
     plusCourtChemin() {
         var currentVertex = this.end;
@@ -208,6 +227,7 @@ class PlusCourtChemin extends React.Component {
      * @description Trouve le noeud le plus proche de celui demandé
      * 
      * @param {*} vertexId L'identifiant du noeud demandé
+     * @returns null
      */
     getShortestVertex(vertexId) {
         var connectedVertices = this.graph.getConnectedVertices(vertexId);
@@ -227,7 +247,10 @@ class PlusCourtChemin extends React.Component {
     /**
      * @author Alex Lajeunesse
      * 
-     * @description 
+     * @description Affiche le chemin créé par l'algorithme du plus court chemin
+     * 
+     * @params null
+     * @returns null
      */
     drawPath() {
         if (this.count < this.path.length) {
@@ -236,6 +259,7 @@ class PlusCourtChemin extends React.Component {
         } else {
             clearInterval(this.intervalle);
         }
+        // Pour le render du graphe
         this.setState((prevState) => ({
             graph: {
                 ...prevState.graph,
@@ -245,8 +269,16 @@ class PlusCourtChemin extends React.Component {
         }));
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Rendu de la page Web pour PlusCourtChemin
+     * 
+     * @params null
+     * @returns null
+     */
     render() {
-        // Gère les options du graphe tels que la physique l'identification des noeuds, etc.
+        // Gère les options du graphe tels que la physique, l'identification des noeuds, etc.
         const options = {
             layout: {
                 hierarchical: false,

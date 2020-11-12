@@ -1,17 +1,17 @@
 /**
- * 1838304 - Alex Lajeunesse
+ * @author 1838304 - Alex Lajeunesse
  * 
- * Edge
+ * @class Edge
  * 
- * Arête en français. Composant du graphe.
- * Relie deux noeuds entre eux.
+ * @classdesc Arête en français. Composant du graphe.
+ * @classdesc Relie deux noeuds entre eux.
  */
 class Edge {
 
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Constructeur de Edge
+     * @description Constructeur de Edge
      * 
      * @param idFrom L'id du premier noeud
      * @param idTo L'id du second noeud

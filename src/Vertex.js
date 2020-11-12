@@ -1,18 +1,18 @@
 /**
- * 1838304 - Alex Lajeunesse
+ * @author 1838304 - Alex Lajeunesse
  * 
- * Vertex
+ * @class Vertex
  * 
- * Noeud en français. Composant du graphe contenant des données.
- * Est lié à d'autres noeuds avec des arêtes.
- * Sert à définir les zones et leur couleur dans cette application.
+ * @classdesc Noeud en français. Composant du graphe contenant des données.
+ * @classdesc Est lié à d'autres noeuds avec des arêtes.
+ * @classdesc Sert à définir les zones et leur couleur dans cette application.
  */
 class Vertex {
     
     /**
-     * Alex Lajeunesse
+     * @author Alex Lajeunesse
      * 
-     * Constructeur de Vertex
+     * @description Constructeur de Vertex
      * 
      * @param id L'identifiant du noeud
      * @param color Le groupe du noeud

@@ -43,6 +43,14 @@ class TraversalLargeur extends React.Component {
         this.createLaby();
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Assure le fonctionnement de l'intervalle dans React
+     * 
+     * @params null
+     * @returns null
+     */
     componentDidMount() {
         this.intervalle = setInterval(() => this.parcoursEnLargeur(), 1000);
     }
@@ -127,6 +135,7 @@ class TraversalLargeur extends React.Component {
         this.graph.vertices[18].x = 400;
         this.graph.vertices[18].y = 400;
 
+        // Pour le render du graphe
         this.setState((prevState) => ({
             graph: {
                 ...prevState.graph,
@@ -158,6 +167,7 @@ class TraversalLargeur extends React.Component {
                     this.queue.push(this.connectedVertices[i]);
                     this.graph.vertices[this.connectedVertices[i]].color = "green";
                 }
+                // Pour le render du graphe
                 this.setState((prevState) => ({
                     graph: {
                         ...prevState.graph,
@@ -171,8 +181,16 @@ class TraversalLargeur extends React.Component {
         }
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Rendu de la page Web pour TraversalLargeur
+     * 
+     * @params null
+     * @returns null
+     */
     render() {
-        // Gère les options du graphe tels que la physique l'identification des noeuds, etc.
+        // Gère les options du graphe tels que la physique, l'identification des noeuds, etc.
         const options = {
             layout: {
                 hierarchical: false,
